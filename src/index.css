@@ -66,6 +66,26 @@
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+/* ---------------------------------------------------------------------------
+   Legacy variable bridge — TEMPORARY.
+   The original Tasks/Expenses markup (moved into views in Phase 2) references
+   these CSS-var names. Aliasing them onto the Phase 1 tokens keeps that markup
+   coherent and dark-mode aware until the views are redesigned in Phases 3 & 4,
+   at which point this block is deleted.
+--------------------------------------------------------------------------- */
+:root {
+  --color-background-primary: var(--surface);
+  --color-background-secondary: var(--surface-2);
+  --color-border-secondary: var(--border);
+  --color-border-tertiary: var(--border);
+  --color-text-primary: var(--foreground);
+  --color-text-secondary: var(--muted);
+  --color-text-tertiary: var(--muted);
+  --border-radius-md: 0.625rem;
+  --border-radius-lg: 1rem;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
