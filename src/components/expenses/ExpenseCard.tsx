@@ -33,7 +33,7 @@ export function ExpenseCard({ expense, onDelete }: ExpenseCardProps) {
 
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-medium text-foreground">{expense.name}</p>
-        <div className="mt-1 flex items-center gap-2 text-xs text-muted">
+        <div className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
           <span
             className="rounded-full px-2 py-0.5 font-medium"
             style={{ background: tint, color }}

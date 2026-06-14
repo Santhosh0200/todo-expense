@@ -34,7 +34,7 @@ export function BudgetCard({
 
   return (
     <Card className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2 text-sm font-medium text-muted">
           <Wallet className="h-4 w-4" aria-hidden />
           Budget overview
@@ -127,9 +127,14 @@ function Stat({
   className?: string;
 }) {
   return (
-    <div className="rounded-xl bg-surface-2/60 p-3">
+    <div className="min-w-0 rounded-xl bg-surface-2/60 p-3">
       <p className="text-xs text-muted">{label}</p>
-      <p className={cn("mt-0.5 text-lg font-semibold tracking-tight tabular-nums", className)}>
+      <p
+        className={cn(
+          "mt-0.5 truncate text-base font-semibold tracking-tight tabular-nums sm:text-lg",
+          className,
+        )}
+      >
         {value}
       </p>
     </div>

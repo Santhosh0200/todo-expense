@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { LayoutDashboard, ListTodo, Wallet } from "lucide-react";
+import { BarChart3, LayoutDashboard, ListTodo, Wallet } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { View } from "../types";
 import { cn } from "../lib/cn";
@@ -8,6 +8,7 @@ const items: { id: View; label: string; icon: LucideIcon }[] = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "tasks", label: "Tasks", icon: ListTodo },
   { id: "expenses", label: "Expenses", icon: Wallet },
+  { id: "analytics", label: "Analytics", icon: BarChart3 },
 ];
 
 export function FloatingDock({
@@ -30,7 +31,7 @@ export function FloatingDock({
               onClick={() => onNavigate(item.id)}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "relative flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium transition-colors",
+                "relative flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors",
                 isActive ? "text-primary-foreground" : "text-muted hover:text-foreground",
               )}
             >

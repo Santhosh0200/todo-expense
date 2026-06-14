@@ -4,6 +4,7 @@ import { AppShell } from "./components/AppShell";
 import { DashboardView } from "./views/DashboardView";
 import { TasksView } from "./views/TasksView";
 import { ExpensesView } from "./views/ExpensesView";
+import { AnalyticsView } from "./views/AnalyticsView";
 import { isOverdue, isDueToday } from "./lib/dates";
 import { CATEGORIES } from "./lib/constants";
 import type { Todo, Expense, Toast, View, TaskFilter } from "./types";
@@ -327,7 +328,7 @@ export default function App() {
             toggleTodo={toggleTodo}
             deleteTodo={deleteTodo}
           />
-        ) : (
+        ) : view === "expenses" ? (
           <ExpensesView
             filteredExpenses={filteredExpenses}
             total={total}
@@ -351,6 +352,15 @@ export default function App() {
             expFilter={expFilter}
             setExpFilter={setExpFilter}
             deleteExpense={deleteExpense}
+          />
+        ) : (
+          <AnalyticsView
+            expenses={expenses}
+            total={total}
+            budget={budget}
+            remaining={remaining}
+            pct={pct}
+            barColor={barColor}
           />
         )}
       </AppShell>

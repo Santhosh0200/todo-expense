@@ -64,7 +64,7 @@ function Insight({
   sub?: string;
 }) {
   return (
-    <div className="rounded-xl bg-surface-2/60 p-3">
+    <div className="min-w-0 rounded-xl bg-surface-2/60 p-3">
       <div className="flex items-center gap-1.5 text-muted">
         {icon}
         <span className="truncate text-[11px] font-medium">{label}</span>

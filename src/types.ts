@@ -19,6 +19,6 @@ export interface Toast {
   type: "info" | "success" | "error" | "warning";
 }
 
-export type View = "dashboard" | "tasks" | "expenses";
+export type View = "dashboard" | "tasks" | "expenses" | "analytics";
 
 export type TaskFilter = "all" | "active" | "done" | "today" | "overdue";

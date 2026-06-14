@@ -25,12 +25,12 @@ export function AppShell({ view, onNavigate, onRefresh, notice, children }: AppS
     <MotionConfig reducedMotion="user">
       <div className="min-h-svh">
         <div className="mx-auto w-full max-w-2xl px-4 pb-32 pt-6">
-        <header className="mb-6 flex items-center justify-between">
-          <div>
+        <header className="mb-6 flex items-center justify-between gap-3">
+          <div className="min-w-0">
             <h1 className="text-xl font-semibold tracking-tight text-foreground">My Planner</h1>
-            <p className="mt-0.5 text-xs text-muted">{today}</p>
+            <p className="mt-0.5 truncate text-xs text-muted">{today}</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-shrink-0 items-center gap-2">
             <button
               type="button"
               onClick={onRefresh}

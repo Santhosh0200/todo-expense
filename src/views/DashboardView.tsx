@@ -48,10 +48,10 @@ export function DashboardView({
       animate="show"
       className="grid grid-cols-2 gap-3 sm:gap-4"
     >
-      <motion.div variants={item} className="col-span-1">
+      <motion.div variants={item} className="col-span-2 sm:col-span-1">
         <TasksSummaryTile counts={counts} onNavigate={onNavigate} />
       </motion.div>
-      <motion.div variants={item} className="col-span-1">
+      <motion.div variants={item} className="col-span-2 sm:col-span-1">
         <BudgetTile
           total={total}
           budget={budget}
