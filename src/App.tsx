@@ -36,23 +36,18 @@ interface ProxyResponse {
 }
 
 async function sbProxy(method: string, table: string, body: any, query: string = ""): Promise<ProxyResponse> {
-  const systemPrompt = `You are a Supabase REST API proxy. Make a ${method} request to ${SUPABASE_URL}/rest/v1/${table}${query} with headers: apikey: ${SUPABASE_KEY}, Authorization: Bearer ${SUPABASE_KEY}, Content-Type: application/json, Prefer: return=representation. ${body ? `Body: ${JSON.stringify(body)}` : ""} Return ONLY a JSON object with exactly two fields: "status" (number) and "data" (the parsed response body, or null if empty). No explanation, no markdown.`;
-  const resp = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1000,
-      system: systemPrompt,
-      messages: [{ role: "user", content: "Execute the request now." }]
-    })
+  const resp = await fetch(`${SUPABASE_URL}/rest/v1/${table}${query}`, {
+    method,
+    headers: {
+      apikey: SUPABASE_KEY,
+      Authorization: `Bearer ${SUPABASE_KEY}`,
+      "Content-Type": "application/json",
+      Prefer: "return=representation",
+    },
+    body: body ? JSON.stringify(body) : undefined,
   });
-  const result = await resp.json();
-  const text = result.content?.[0]?.text || "{}";
-  try {
-    const clean = text.replace(/```json|```/g, "").trim();
-    return JSON.parse(clean);
-  } catch { return { status: 500, data: null }; }
+  const data = resp.status === 204 ? null : await resp.json().catch(() => null);
+  return { status: resp.status, data };
 }
 
 function isOverdue(due: string | undefined): boolean { if (!due) return false; return new Date(due) < new Date(new Date().toDateString()); }
