@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import type { CSSProperties } from "react";
-
-const SUPABASE_URL = "https://trsgedzccdfchfulbifq.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRyc2dlZHpjY2RmY2hmdWxiaWZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0MjMyMDIsImV4cCI6MjA5Njk5OTIwMn0.IuwxKmLpt7Qen-i-z9_8g5rteQig5OA2N85g9rPrIoU";
+import { SUPABASE_URL, SUPABASE_KEY } from "./lib/supabase";
 
 const CATEGORIES = ["Food", "Transport", "Shopping", "Education", "Health", "Entertainment", "Other"];
 const CAT_COLORS = { Food:"#1D9E75",Transport:"#378ADD",Shopping:"#D4537E",Education:"#7F77DD",Health:"#E24B4A",Entertainment:"#BA7517",Other:"#888780" };
