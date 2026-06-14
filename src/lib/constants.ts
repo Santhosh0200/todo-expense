@@ -1,3 +1,14 @@
+import type { LucideIcon } from "lucide-react";
+import {
+  BookOpen,
+  Bus,
+  Gamepad2,
+  HeartPulse,
+  MoreHorizontal,
+  ShoppingBag,
+  Utensils,
+} from "lucide-react";
+
 export const CATEGORIES = [
   "Food",
   "Transport",
@@ -36,4 +47,14 @@ export const CAT_ICONS = {
   Health: "heart",
   Entertainment: "device-gamepad",
   Other: "dots",
+};
+
+export const CAT_LUCIDE: Record<string, LucideIcon> = {
+  Food: Utensils,
+  Transport: Bus,
+  Shopping: ShoppingBag,
+  Education: BookOpen,
+  Health: HeartPulse,
+  Entertainment: Gamepad2,
+  Other: MoreHorizontal,
 };

@@ -290,7 +290,23 @@ export default function App() {
             Connecting to database...
           </div>
         ) : view === "dashboard" ? (
-          <DashboardView onNavigate={setView} />
+          <DashboardView
+            todos={todos}
+            expenses={expenses}
+            counts={{
+              all: todos.length,
+              active: activeCount,
+              today: todayCount,
+              overdue: overdueCount,
+              done: doneCount,
+            }}
+            total={total}
+            budget={budget}
+            remaining={remaining}
+            pct={pct}
+            barColor={barColor}
+            onNavigate={setView}
+          />
         ) : view === "tasks" ? (
           <TasksView
             filteredTodos={filteredTodos}
