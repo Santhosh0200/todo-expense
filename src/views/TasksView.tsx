@@ -25,8 +25,8 @@ interface TasksViewProps {
 const EMPTY: Record<TaskFilter, { icon: LucideIcon; title: string; description: string }> = {
   all: {
     icon: Inbox,
-    title: "No tasks yet",
-    description: "Add your first task above to get started.",
+    title: "Your flow starts here",
+    description: "Add your first task above and let Fluxa keep things moving.",
   },
   active: {
     icon: CheckCircle2,

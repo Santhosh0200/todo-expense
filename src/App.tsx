@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { SUPABASE_URL, SUPABASE_KEY } from "./lib/supabase";
+import type { CaptureSource } from "./types";
 import { AppShell } from "./components/AppShell";
 import { DashboardView } from "./views/DashboardView";
 import { TasksView } from "./views/TasksView";
@@ -79,22 +80,63 @@ export default function App() {
     loadData();
   }, [loadData]);
 
-  const addTodo = async () => {
-    if (!taskText.trim()) return;
+  // Tracks whether the optional `source` analytics column exists in the
+  // backend. The app stays stable whether or not the migration has been
+  // applied: if the column is missing, we transparently retry without it.
+  const sourceSupportedRef = useRef<boolean | null>(null);
+
+  const insertRow = async (
+    table: string,
+    body: Record<string, unknown>,
+    source: CaptureSource,
+  ): Promise<ProxyResponse> => {
+    if (sourceSupportedRef.current === false) {
+      return sbProxy("POST", table, body);
+    }
+    const res = await sbProxy("POST", table, { ...body, source });
+    if (res.status >= 400) {
+      const code = (res.data && (res.data as { code?: string }).code) || "";
+      const msg = JSON.stringify(res.data ?? "");
+      if (code === "PGRST204" || /['"]?source['"]? column|column .*source/i.test(msg)) {
+        sourceSupportedRef.current = false;
+        return sbProxy("POST", table, body);
+      }
+      return res;
+    }
+    sourceSupportedRef.current = true;
+    return res;
+  };
+
+  // Shared task write path. Used by the Tasks form and Quick Capture so the
+  // persistence logic, optimistic update and toasts live in exactly one place.
+  const createTodo = async (
+    payload: { text: string; due: string | null },
+    source: CaptureSource = "form",
+  ): Promise<string | number | null> => {
+    const text = payload.text.trim();
+    if (!text) return null;
     showToast("Saving...", "info");
     try {
-      const r = await sbProxy("POST", "todos", { text: taskText.trim(), done: false, due: taskDue || null });
+      const r = await insertRow("todos", { text, done: false, due: payload.due || null }, source);
       const row = Array.isArray(r.data) ? r.data[0] : r.data;
       if (row?.id) {
         setTodos((prev) => [row, ...prev]);
-        setTaskText("");
-        setTaskDue("");
         showToast("Task added ✓", "success");
-      } else {
-        showToast("Failed to add task", "error");
+        return row.id;
       }
+      showToast("Failed to add task", "error");
+      return null;
     } catch {
       showToast("Failed to add task", "error");
+      return null;
+    }
+  };
+
+  const addTodo = async () => {
+    const id = await createTodo({ text: taskText.trim(), due: taskDue || null }, "form");
+    if (id) {
+      setTaskText("");
+      setTaskDue("");
     }
   };
 
@@ -118,43 +160,57 @@ export default function App() {
     }
   };
 
-  const addExpense = async () => {
-    const amt = parseFloat(expAmt);
-    if (!expName.trim() || isNaN(amt) || amt <= 0) {
+  // Shared expense write path. Used by the Expenses form and Quick Capture.
+  const createExpense = async (
+    payload: { name: string; amount: number; category: string },
+    source: CaptureSource = "form",
+  ): Promise<string | number | null> => {
+    const name = payload.name.trim();
+    if (!name || isNaN(payload.amount) || payload.amount <= 0) {
       showToast("Enter a valid name and amount", "warning");
-      return;
+      return null;
     }
     showToast("Saving...", "info");
     try {
-      const r = await sbProxy("POST", "expenses", {
-        name: expName.trim(),
-        amount: amt,
-        category: expCat,
-        date: new Date().toISOString(),
-      });
+      const r = await insertRow(
+        "expenses",
+        { name, amount: payload.amount, category: payload.category, date: new Date().toISOString() },
+        source,
+      );
       let row = r.data;
       if (Array.isArray(row)) row = row[0];
       if (row?.id) {
         setExpenses((prev) => [row, ...prev]);
-        setExpName("");
-        setExpAmt("");
         showToast("Expense logged ✓", "success");
-      } else {
-        const fallback = {
-          id: Date.now().toString(),
-          name: expName.trim(),
-          amount: amt,
-          category: expCat,
-          date: new Date().toISOString(),
-        };
-        setExpenses((prev) => [fallback, ...prev]);
-        setExpName("");
-        setExpAmt("");
-        showToast("Expense logged ✓", "success");
-        loadData();
+        return row.id;
       }
+      const fallback = {
+        id: Date.now().toString(),
+        name,
+        amount: payload.amount,
+        category: payload.category,
+        date: new Date().toISOString(),
+        source,
+      };
+      setExpenses((prev) => [fallback, ...prev]);
+      showToast("Expense logged ✓", "success");
+      loadData();
+      return fallback.id;
     } catch {
       showToast("Failed to log expense", "error");
+      return null;
+    }
+  };
+
+  const addExpense = async () => {
+    const id = await createExpense({
+      name: expName.trim(),
+      amount: parseFloat(expAmt),
+      category: expCat,
+    }, "form");
+    if (id) {
+      setExpName("");
+      setExpAmt("");
     }
   };
 
@@ -307,6 +363,9 @@ export default function App() {
             pct={pct}
             barColor={barColor}
             onNavigate={setView}
+            onCreateExpense={(e) => createExpense(e, "quick_capture")}
+            onCreateTask={(t) => createTodo(t, "quick_capture")}
+            onUndo={(type, id) => (type === "expense" ? deleteExpense(id) : deleteTodo(id))}
           />
         ) : view === "tasks" ? (
           <TasksView

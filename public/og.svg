@@ -1,0 +1,32 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0b0c0f"/>
+      <stop offset="1" stop-color="#16181d"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="120" y1="210" x2="360" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B7CFF"/>
+      <stop offset="1" stop-color="#5B4CF0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(240 300) scale(420)">
+      <stop stop-color="#6d5efc" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#6d5efc" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Logomark tile -->
+  <g transform="translate(120 215)">
+    <rect width="200" height="200" rx="54" fill="url(#mark)"/>
+    <g transform="translate(31 0) skewX(-9)" fill="#ffffff">
+      <rect x="53" y="38" width="29" height="125" rx="14"/>
+      <rect x="53" y="38" width="81" height="29" rx="14"/>
+      <rect x="53" y="84" width="56" height="29" rx="14"/>
+    </g>
+  </g>
+
+  <!-- Wordmark + tagline -->
+  <text x="360" y="300" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="104" font-weight="700" letter-spacing="-3" fill="#f4f4f5">Fluxa</text>
+  <text x="362" y="370" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="40" font-weight="500" letter-spacing="0.5" fill="#a1a1aa">Plan. Spend. Progress.</text>
+</svg>

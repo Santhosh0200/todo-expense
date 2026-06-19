@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { CheckCircle2, PieChart, Receipt, TrendingUp } from "lucide-react";
+import { CheckCircle2, PieChart, Receipt, Sparkles, TrendingUp } from "lucide-react";
 import type { Expense } from "../../types";
 import type { TaskCounts } from "../tasks/TaskFilters";
 import { formatINR } from "../../lib/format";
@@ -10,9 +10,19 @@ interface InsightsTileProps {
   total: number;
   remaining: number | null;
   pct: number;
+  qcTasks: number;
+  qcExpenses: number;
 }
 
-export function InsightsTile({ expenses, counts, total, remaining, pct }: InsightsTileProps) {
+export function InsightsTile({
+  expenses,
+  counts,
+  total,
+  remaining,
+  pct,
+  qcTasks,
+  qcExpenses,
+}: InsightsTileProps) {
   const byCategory = expenses.reduce<Record<string, number>>((acc, e) => {
     acc[e.category] = (acc[e.category] ?? 0) + e.amount;
     return acc;
@@ -48,6 +58,16 @@ export function InsightsTile({ expenses, counts, total, remaining, pct }: Insigh
           sub={expenses.length === 1 ? "expense" : "expenses"}
         />
       </div>
+
+      {qcTasks + qcExpenses > 0 && (
+        <p className="mt-3 flex items-center gap-1.5 text-[11px] text-muted">
+          <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden />
+          <span>
+            Quick Capture: {qcTasks} {qcTasks === 1 ? "task" : "tasks"} · {qcExpenses}{" "}
+            {qcExpenses === 1 ? "expense" : "expenses"}
+          </span>
+        </p>
+      )}
     </div>
   );
 }

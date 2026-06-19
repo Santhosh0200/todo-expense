@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { BarChart3, LayoutDashboard, ListTodo, Wallet } from "lucide-react";
+import { BarChart3, LayoutDashboard, ListTodo, Plus, Wallet } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { View } from "../types";
 import { cn } from "../lib/cn";
+import { requestQuickCaptureFocus } from "../lib/quickCapture/focusBus";
 
 const items: { id: View; label: string; icon: LucideIcon }[] = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -47,6 +48,20 @@ export function FloatingDock({
             </button>
           );
         })}
+
+        <span className="mx-0.5 h-6 w-px bg-border" aria-hidden />
+
+        <button
+          type="button"
+          onClick={() => {
+            onNavigate("dashboard");
+            requestQuickCaptureFocus();
+          }}
+          aria-label="Quick capture"
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <Plus className="h-[18px] w-[18px]" aria-hidden />
+        </button>
       </div>
     </nav>
   );

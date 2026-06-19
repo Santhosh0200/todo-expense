@@ -1,9 +1,12 @@
+export type CaptureSource = "form" | "quick_capture";
+
 export interface Todo {
   id: string | number;
   text: string;
   done: boolean;
   due?: string;
   created_at: string;
+  source?: CaptureSource | null;
 }
 
 export interface Expense {
@@ -12,6 +15,7 @@ export interface Expense {
   amount: number;
   category: string;
   date: string;
+  source?: CaptureSource | null;
 }
 
 export interface Toast {

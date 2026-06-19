@@ -89,10 +89,10 @@ export function ExpensesView({
       {filteredExpenses.length === 0 ? (
         <EmptyState
           icon={Receipt}
-          title={expFilter === "All" ? "No expenses yet" : `No ${expFilter} expenses`}
+          title={expFilter === "All" ? "Track every rupee" : `No ${expFilter} expenses`}
           description={
             expFilter === "All"
-              ? "Log your first expense above to start tracking."
+              ? "Log your first expense above and Fluxa will keep the numbers in view."
               : "Nothing logged in this category yet."
           }
         />

@@ -4,6 +4,7 @@ import { RefreshCw } from "lucide-react";
 import type { View } from "../types";
 import { FloatingDock } from "./FloatingDock";
 import { ThemeToggle } from "./ThemeToggle";
+import { Logo } from "./ui/Logo";
 
 interface AppShellProps {
   view: View;
@@ -27,8 +28,8 @@ export function AppShell({ view, onNavigate, onRefresh, notice, children }: AppS
         <div className="mx-auto w-full max-w-2xl px-4 pb-32 pt-6">
         <header className="mb-6 flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <h1 className="text-xl font-semibold tracking-tight text-foreground">My Planner</h1>
-            <p className="mt-0.5 truncate text-xs text-muted">{today}</p>
+            <Logo />
+            <p className="mt-1 truncate text-xs text-muted">{today}</p>
           </div>
           <div className="flex flex-shrink-0 items-center gap-2">
             <button

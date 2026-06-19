@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img src="./public/favicon.svg" width="72" height="72" alt="Fluxa logo" />
 
-Currently, two official plugins are available:
+# Fluxa
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Plan. Spend. Progress.
 
-## React Compiler
+One focused, single-user workspace that unifies your **tasks** and your **spending** —
+so the time you plan and the money you spend live in the same calm place.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+</div>
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Overview
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Fluxa is a personal productivity + spending app built for a single user who wants
+clarity, not clutter. Unlike generic to-do apps and standalone expense trackers,
+Fluxa connects your **effort** and your **money** in one coherent dashboard.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Tasks** — capture, schedule, filter (today / active / overdue / done) and complete.
+- **Expenses** — log spending by category with budgets and at-a-glance breakdowns.
+- **Dashboard** — a unified daily view of what you're planning and what you're spending.
+- **Analytics** — monthly spending trends, category mix, and budget utilization.
+- **Mobile-responsive UI** — a premium, theme-aware interface (light & dark).
+- **Supabase backend** — auth-ready persistence for tasks and expenses.
+
+## Tech stack
+
+- **React 19** + **TypeScript** + **Vite**
+- **Tailwind CSS v4**
+- **Framer Motion** for fluid micro-interactions
+- **Recharts** for analytics
+- **Supabase** for the backend
+
+## Getting started
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Configure environment
+cp .env.example .env   # then add your Supabase URL + anon key
+
+# 3. Run the dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command           | Description                       |
+| ----------------- | --------------------------------- |
+| `npm run dev`     | Start the Vite dev server         |
+| `npm run build`   | Type-check and build for production |
+| `npm run preview` | Preview the production build      |
+| `npm run lint`    | Run ESLint                        |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Brand
+
+- **Name:** Fluxa
+- **Tagline:** Plan. Spend. Progress.
+- **Mark:** an abstract, forward-leaning "F" representing flow, progress, and movement.
+- **Color:** violet → indigo gradient (`#8B7CFF → #5B4CF0`).
